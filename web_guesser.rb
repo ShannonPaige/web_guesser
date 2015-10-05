@@ -1,34 +1,41 @@
-require 'sinatra'           # ~> LoadError: cannot load such file -- sinatra
+require 'sinatra'
 require 'sinatra/reloader'
 
 SECRET_NUMBER = rand(101)
+# @@guesses_remaining = 5
 
 def check_guess(guess)
   if guess.nil?
     return ""
   elsif guess.to_i > SECRET_NUMBER + 5
-    return "Waaaaay too high"
+    return ["Waaaaay too high", "FF0000"]
   elsif guess.to_i < SECRET_NUMBER - 5
-    return "Waaaaaay too low"
+    return ["Waaaaaay too low", "CC3300"]
   elsif guess.to_i > SECRET_NUMBER
-    return "Too high"
+    return ["Too high", "FE8387"]
   elsif guess.to_i < SECRET_NUMBER
-    return "Too low"
+    return ["Too low", "DB704D"]
   else
-    "You guessed the secret number!!! It WAS #{SECRET_NUMBER}"
+    ["You guessed the secret number!!! It WAS #{SECRET_NUMBER}", "85E685"]
   end
 end
 
+# def reset_number
+#   @@guesses_remaining = 5
+#   SECRET_NUMBER = rand(101)
+# end
+#
+# def bad_guess
+#   @@guesses_remaining -= 1
+#   if @@guesses_remaining.zero?
+#     reset_number
+#     return ["You used up all your guesses!! The game will be reset.", "FF6600"]
+#   end
+# end
+
 get '/' do
   guess = params["guess"]
-  message = check_guess(guess)
-  x = erb :index, :locals => {:guess => guess, :message => message}
+  message, background = check_guess(guess)
+  x = erb :index, :locals => {:guess => guess, :message => message, :background => background}
 
 end
-
-# ~> LoadError
-# ~> cannot load such file -- sinatra
-# ~>
-# ~> /Users/shannonpaige/.rvm/rubies/ruby-2.2.2/lib/ruby/site_ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
-# ~> /Users/shannonpaige/.rvm/rubies/ruby-2.2.2/lib/ruby/site_ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
-# ~> /Users/shannonpaige/code/web_guesser/web_guesser.rb:1:in `<main>'
