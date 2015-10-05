@@ -8,15 +8,15 @@ def check_guess(guess)
   if guess.nil?
     return ""
   elsif guess.to_i > SECRET_NUMBER + 5
-    return ["Waaaaay too high", "FF0000"]
+    return ["Waaaaay too high", "#FF0000"]
   elsif guess.to_i < SECRET_NUMBER - 5
-    return ["Waaaaaay too low", "CC3300"]
+    return ["Waaaaaay too low", "#CC3300"]
   elsif guess.to_i > SECRET_NUMBER
-    return ["Too high", "FE8387"]
+    return ["Too high", "#FE8387"]
   elsif guess.to_i < SECRET_NUMBER
-    return ["Too low", "DB704D"]
+    return ["Too low", "#DB704D"]
   else
-    ["You guessed the secret number!!! It WAS #{SECRET_NUMBER}", "85E685"]
+    ["You guessed the secret number!!! It WAS #{SECRET_NUMBER}", "#85E685"]
   end
 end
 
