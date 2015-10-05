@@ -20,7 +20,9 @@ def check_guess(guess)
     else
       correct_answer = @@secret_number
       reset_secret_number
-      return ["You guessed the secret number!!! It WAS #{correct_answer}.\nThe game has now been reset. Play again!", "#85E685"]
+      return ["Winner winner, chicken dinner!<br />
+        You guessed the secret number!!! It WAS #{correct_answer}.<br />
+        The game has now been reset. Play again!", "#85E685"]
 
     end
   end
@@ -39,9 +41,22 @@ def reset_secret_number
   @@secret_number = rand(101)
 end
 
+def cheat_mode(cheater)
+  if cheater.nil?
+    cheat_message =  ""
+  elsif cheater == "true"
+    cheat_message = ".....You little rebel, I like you.<br />
+    The answer is #{@@secret_number}...shhhhhh"
+  else
+    cheat_message = "You are trying to cheat, but you suck at it.<br />
+    Lame."
+  end
+end
+
 get '/' do
   guess = params["guess"]
+  cheater = params["cheat"]
   message, background = check_guess(guess)
-  x = erb :index, :locals => {:message => message, :background => background, :number => @@secret_number, :guesses => @@guesses_remaining}
-
+  cheat_message = cheat_mode(cheater)
+  x = erb :index, :locals => {:message => message, :background => background, :cheat_message => cheat_message}
 end
