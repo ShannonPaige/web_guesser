@@ -4,6 +4,10 @@ require 'sinatra/reloader'
 @@secret_number = rand(101)
 @@guesses_remaining = 5
 
+
+# Think I can refactor the below...not sure how...
+# maybe combine the 2 highs and 2 lows and somehow move the winner functionality
+# to it's own method?
 def check_guess(guess)
   if guess.nil?
     return ["", "#FFFFFF"]
@@ -23,7 +27,6 @@ def check_guess(guess)
       return ["Winner winner, chicken dinner!<br />
         You guessed the secret number!!! It WAS #{correct_answer}.<br />
         The game has now been reset. Play again!", "#85E685"]
-
     end
   end
 end
